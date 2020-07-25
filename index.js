@@ -55,18 +55,29 @@ let lizard = {
 }
 
 // if we want lizard to inherit all the properties from dragon:
+// lizard.__proto__ = dragon;
+
+// lizard.sing() //returns string after traveling up the prototype chain up to dragon
+
+// lizard.fire //returns true
+
+// lizard.fight() //returns 1 because fight is already defined in lizard
+
+// // what if we run:
+// dragon.isPrototypeOf(lizard)
+// // returns true. Under the hood JavaScript get's told to run the method .isPrototypeOf and when it doesn't find it in the dragon object it goes up the prototype chain to the base object. 
+
+// // how about:
+// lizard.isPrototypeOf(dragon)
+// // returns false because, lizard is downstream on the prototype chain from dragon.
+
 lizard.__proto__ = dragon;
+// using __proto__ is not advisable under normal circumstances due to bad performance impacts
 
-lizard.sing() //returns string after traveling up the prototype chain up to dragon
-
-lizard.fire //returns true
-
-lizard.fight() //returns 1 because fight is already defined in lizard
-
-// what if we run:
-dragon.isPrototypeOf(lizard)
-// returns true. Under the hood JavaScript get's told to run the method .isPrototypeOf and when it doesn't find it in the dragon object it goes up the prototype chain to the base object. 
-
-// how about:
-lizard.isPrototypeOf(dragon)
-// returns false because, lizard is downstream on the prototype chain from dragon.
+// calling this for loop without the hasOwnProperty returns all the props from dragon along with lizard
+for (let prop in lizard){
+  // hasOwnProperty allows us to limit the loop to properties only in the current object.
+  if (lizard.hasOwnProperty(prop)) {
+    console.log(prop)
+  }
+}
